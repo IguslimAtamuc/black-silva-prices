@@ -1,303 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <title>Black Silva - Services & Prices</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <style>
-    :root{--bg:#050608;--card:#111218;--accent:#d4af37;--text:#f5f5f5;--muted:#aaa}
-    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    body{background:radial-gradient(circle at top,#1a1a1f 0,#050608 45%,#000 100%);color:var(--text);padding:2rem}
-    .page{max-width:1200px;margin:0 auto}
-    header{text-align:center;margin-bottom:2.5rem}
-    header h1{font-size:2.8rem;letter-spacing:.15em;text-transform:uppercase}
-    header h1 span{color:var(--accent)}
-    header p{margin-top:.5rem;color:var(--muted);font-size:1rem}
-    .info-bar{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:2.5rem}
-    .info-item{background:rgba(17,18,24,.9);border:1px solid rgba(212,175,55,.25);border-radius:.75rem;padding:.75rem 1.25rem;font-size:.95rem;color:var(--muted)}
-    .info-item strong{color:var(--accent);text-transform:uppercase;font-size:.8rem;letter-spacing:.1em}
-    .info-item a{color:var(--accent);text-decoration:none}
-    h2.section-title{font-size:2rem;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:.15em}
-    .category{background:rgba(17,18,24,.95);border-radius:1rem;border:1px solid rgba(255,255,255,.06);box-shadow:0 18px 60px rgba(0,0,0,.8);margin-bottom:2rem;overflow:hidden}
-    .category-header{padding:1rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
-    .category-title{font-size:1.2rem;text-transform:uppercase;letter-spacing:.12em}
-    .category-sub{font-size:.9rem;color:var(--muted);margin-top:.25rem}
-    .category-body{padding:.5rem 1.5rem 1rem}
-    table{width:100%;border-collapse:collapse;font-size:1.05rem}
-    th,td{padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
-    th{text-align:left;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-    td.price{text-align:right;font-weight:600;color:var(--accent);white-space:nowrap}
-    td.time{text-align:right;color:var(--muted);font-size:.9rem;white-space:nowrap}
-    .note{margin-top:.35rem;font-size:.85rem;color:var(--muted)}
-    @media (min-width:992px){
-      body{padding:3rem}
-      header h1{font-size:3.2rem}
-      table{font-size:1.15rem}
-    }
-  </style>
+<meta charset="UTF-8"/>
+<title>Black Silva - Luxury Barbering Experience</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;overflow-x:hidden}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);overflow:hidden}
+.hero:before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(212,175,55,.03) 2px,rgba(212,175,55,.03) 4px);pointer-events:none}
+.logo{font-size:clamp(3rem,8vw,6rem);font-weight:300;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem;text-align:center;animation:fadeInDown 1s ease}
+.logo span{color:#d4af37;font-weight:600}
+.tagline{font-size:clamp(1rem,2.5vw,1.5rem);color:#888;letter-spacing:.15em;margin-bottom:3rem;text-align:center;animation:fadeIn 1.5s ease}
+.qr-container{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:3px solid #d4af37;border-radius:30px;padding:3rem;box-shadow:0 30px 90px rgba(212,175,55,.3),inset 0 1px 0 rgba(255,255,255,.1);animation:scaleIn 1s ease;position:relative;overflow:hidden}
+.qr-container:before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(212,175,55,.1) 0%,transparent 70%);animation:rotate 20s linear infinite}
+.qr-box{background:#fff;padding:2rem;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.5);position:relative;z-index:1}
+.qr-code{width:clamp(200px,25vw,300px);height:clamp(200px,25vw,300px);display:block}
+.scan-text{font-size:clamp(1.2rem,3vw,2rem);font-weight:700;text-transform:uppercase;letter-spacing:.2em;margin-top:2rem;text-align:center;color:#d4af37;animation:pulse 2s ease infinite;text-shadow:0 0 20px rgba(212,175,55,.5)}
+.subtitle{font-size:clamp(.9rem,2vw,1.2rem);color:#aaa;text-align:center;margin-top:.5rem;letter-spacing:.1em}
+.services-highlight{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-top:4rem;max-width:1200px;width:90%;animation:fadeInUp 1.5s ease}
+.service-card{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:1px solid rgba(212,175,55,.3);border-radius:20px;padding:2rem;text-align:center;transition:all .3s ease;position:relative;overflow:hidden}
+.service-card:hover{transform:translateY(-10px);border-color:#d4af37;box-shadow:0 20px 60px rgba(212,175,55,.4)}
+.service-card:before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(212,175,55,.1),transparent);transition:left .5s}
+.service-card:hover:before{left:100%}
+.service-icon{font-size:3rem;margin-bottom:1rem}
+.service-title{font-size:1.3rem;font-weight:600;color:#d4af37;margin-bottom:.5rem;letter-spacing:.1em}
+.service-price{font-size:2rem;font-weight:300;color:#fff;margin-top:.5rem}
+.footer{margin-top:4rem;text-align:center;padding:2rem;color:#666;font-size:.9rem;letter-spacing:.1em}
+.footer a{color:#d4af37;text-decoration:none;transition:color .3s}
+.footer a:hover{color:#fff}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-50px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+</style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <h1><span>Black</span> Silva</h1>
-      <p>Premium Hairdressing & Barbering · Copenhagen · Badstuestræde 16</p>
-    </header>
-
-    <div class="info-bar">
-      <div class="info-item">
-        <strong>Opening Hours</strong><br/>
-        Wed 14:00–20:00 · Thu–Sun 11:00–17:00
-      </div>
-      <div class="info-item">
-        <strong>Address</strong><br/>
-        Badstuestræde 16, 1209 København K, Denmark
-      </div>
-      <div class="info-item">
-        <strong>Online Booking</strong><br/>
-        <a href="https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" target="_blank">Book now on Fresha</a>
-      </div>
-    </div>
-
-    <h2 class="section-title">Services & Prices</h2>
-
-    <section class="category">
-      <div class="category-header">
-        <div>
-          <div class="category-title">Haircut with Elena</div>
-          <div class="category-sub">Discover personalized haircut services with Elena, tailored to your individual style</div>
-        </div>
-      </div>
-      <div class="category-body">
-        <table>
-          <thead>
-            <tr>
-              <th>Service</th>
-              <th class="time">Time</th>
-              <th class="price">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Undercut (From 12mm) + Scissors Top</td>
-              <td class="time">40 min</td>
-              <td class="price">250 kr</td>
-            </tr>
-            <tr>
-              <td>Classic Fade Cut (From 2mm) *No Skin Fade</td>
-              <td class="time">1 hr</td>
-              <td class="price">300 kr</td>
-            </tr>
-            <tr>
-              <td>Haircut + Wash + Styling + Mask --Medium & Short Hair - MAX to Shoulders</td>
-              <td class="time">1 hr, 15 min</td>
-              <td class="price">500 kr</td>
-            </tr>
-            <tr>
-              <td>Haircut + Styling + Wash + Mask (Long Hair Over The Shoulders)</td>
-              <td class="time">1 hr, 30 min</td>
-              <td class="price">650 kr</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="category">
-      <div class="category-header">
-        <div>
-          <div class="category-title">Haircut with Eduard</div>
-          <div class="category-sub">Experience a tailored haircut crafted to reflect your individual style and needs</div>
-        </div>
-      </div>
-      <div class="category-body">
-        <table>
-          <thead>
-            <tr>
-              <th>Service</th>
-              <th class="time">Time</th>
-              <th class="price">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Booking Protection</td>
-              <td class="time">5 min</td>
-              <td class="price">59 kr</td>
-            </tr>
-            <tr>
-              <td>Gentleman Beard Trimming 💈</td>
-              <td class="time">20 min</td>
-              <td class="price">from 125 kr</td>
-            </tr>
-            <tr>
-              <td>Undercut (10mm or 12mm + Scissors top)</td>
-              <td class="time">30 min</td>
-              <td class="price">from 310 kr</td>
-            </tr>
-            <tr>
-              <td>Classic or Skin Fade Haircut + Scissors on the top</td>
-              <td class="time">50 min</td>
-              <td class="price">from 375 kr</td>
-            </tr>
-            <tr>
-              <td>COMBO: Fade Haircut + Beard Trim</td>
-              <td class="time">1 hr</td>
-              <td class="price">from 470 kr</td>
-            </tr>
-            <tr>
-              <td>Classic Scissors Haircut (Scissors Only) MAX shoulder lenght</td>
-              <td class="time">1 hr</td>
-              <td class="price">from 470 kr</td>
-            </tr>
-            <tr>
-              <td>COMBO: Classic Scissors Haircut + Hair Wash</td>
-              <td class="time">1 hr</td>
-              <td class="price">from 625 kr</td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="note">All prices are indicative and may vary depending on hair length, style and extra services.</p>
-      </div>
-    </section>
-
-    <section class="category">
-      <div class="category-header">
-        <div>
-          <div class="category-title">Hair Care</div>
-          <div class="category-sub">Professional Hair Care Services</div>
-        </div>
-      </div>
-      <div class="category-body">
-        <table>
-          <thead>
-            <tr>
-              <th>Service</th>
-              <th class="time">Time</th>
-              <th class="price">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Hair wash Gentlemans</td>
-              <td class="time">10 min</td>
-              <td class="price">from 65 kr</td>
-            </tr>
-            <tr>
-              <td>Eyebrows (Trim + shape + ear hair removal)</td>
-              <td class="time">5 min</td>
-              <td class="price">50 kr</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="category">
-      <div class="category-header">
-        <div>
-          <div class="category-title">Drinks List</div>
-          <div class="category-sub">Refreshments available during your visit</div>
-        </div>
-      </div>
-      <div class="category-body">
-        <table>
-          <thead>
-            <tr>
-              <th>Drink</th>
-              <th class="time">Time</th>
-              <th class="price">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Espresso or Americano ☕</td>
-              <td class="time">5 min</td>
-              <td class="price">10 kr</td>
-            </tr>
-            <tr>
-              <td>Coca-Cola</td>
-              <td class="time">5 min</td>
-              <td class="price">10 kr</td>
-            </tr>
-            <tr>
-              <td>Faxe Kondi</td>
-              <td class="time">5 min</td>
-              <td class="price">10 kr</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="category">
-      <div class="category-header">
-        <div>
-          <div class="category-title">Membership Services</div>
-          <div class="category-sub">You must subscribe to one of our memberships before choosing services in this category</div>
-        </div>
-      </div>
-      <div class="category-body">
-        <table>
-          <thead>
-            <tr>
-              <th>Membership</th>
-              <th class="time">Time</th>
-              <th class="price">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Gentleman Premium</td>
-              <td class="time">1 hr</td>
-              <td class="price">free</td>
-            </tr>
-            <tr>
-              <td>Gentleman Regular</td>
-              <td class="time">1 hr</td>
-              <td class="price">free</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="category">
-      <div class="category-header">
-        <div>
-          <div class="category-title">Masterclass & Urgent Haircut</div>
-          <div class="category-sub">I like using my free time teaching people or help them with a last minute haircut :)</div>
-        </div>
-      </div>
-      <div class="category-body">
-        <table>
-          <thead>
-            <tr>
-              <th>Service</th>
-              <th class="time">Time</th>
-              <th class="price">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Last Chance Haircut!</td>
-              <td class="time">1 hr</td>
-              <td class="price">1.000 kr</td>
-            </tr>
-            <tr>
-              <td>Masterclass MODULE 1</td>
-              <td class="time">8 hrs</td>
-              <td class="price">1.000 kr</td>
-            </tr>
-            <tr>
-              <td>Masterclass MODULE 2</td>
-              <td class="time">3 hrs</td>
-              <td class="price">1.000 kr</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-  </div>
+<div class="hero">
+<h1 class="logo"><span>BLACK</span> SILVA</h1>
+<p class="tagline">PREMIUM BARBERING · KØBENHAVN</p>
+<div class="qr-container">
+<div class="qr-box">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" alt="Scan to Book" class="qr-code"/>
+</div>
+<h2 class="scan-text">SCAN TO BOOK</h2>
+<p class="subtitle">Instant Online Booking</p>
+</div>
+<div class="services-highlight">
+<div class="service-card">
+<div class="service-icon">✂️</div>
+<h3 class="service-title">FADE HAIRCUT</h3>
+<p class="service-price">from 375 kr</p>
+</div>
+<div class="service-card">
+<div class="service-icon">💈</div>
+<h3 class="service-title">BEARD TRIM</h3>
+<p class="service-price">from 125 kr</p>
+</div>
+<div class="service-card">
+<div class="service-icon">👔</div>
+<h3 class="service-title">COMBO DEAL</h3>
+<p class="service-price">from 470 kr</p>
+</div>
+</div>
+<div class="footer">
+<p>BADSTUESTRÆDE 16 · 1209 KØBENHAVN K</p>
+<p style="margin-top:.5rem">WED 14:00-20:00 · THU-SUN 11:00-17:00</p>
+<p style="margin-top:1rem"><a href="https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" target="_blank">VIEW ALL SERVICES & PRICES</a></p>
+</div>
+</div>
 </body>
 </html>
