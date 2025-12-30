@@ -73,40 +73,41 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
 </div>
 </body>
 
-  <!-- Music Player -->
-<div class="music-player">
-  <button class="music-toggle" onclick="toggleMusic()" aria-label="Toggle background music">
-    <span class="music-icon">🎵</span>
+<!-- Background Music Player -->
+<div class="music-control">
+  <button id="musicBtn" onclick="toggleMusic()" aria-label="Toggle music">
+    <span id="playIcon">▶</span>
+    <span id="musicLabel">BACKGROUND MUSIC</span>
   </button>
-  <audio id="bgMusic" loop>
-    <source src="https://streams.radiomast.io/69fa0d50-e99d-4ea0-83cc-f088f4c2f38b" type="audio/mpeg">
-  </audio>
+  <iframe id="musicFrame" style="display:none" allow="autoplay" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&loop=1&playlist=jfKfPfyJRdk" frameborder="0"></iframe>
 </div>
 
 <script>
 let isPlaying = false;
-const audio = document.getElementById('bgMusic');
-const toggle = document.querySelector('.music-toggle');
+const musicBtn = document.getElementById('musicBtn');
+const musicFrame = document.getElementById('musicFrame');
+const playIcon = document.getElementById('playIcon');
 
 function toggleMusic() {
   if (isPlaying) {
-    audio.pause();
-    toggle.classList.remove('playing');
+    musicFrame.src = 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&loop=1&playlist=jfKfPfyJRdk';
+    playIcon.textContent = '▶';
+    musicBtn.classList.remove('playing');
     isPlaying = false;
   } else {
-    audio.play();
-    toggle.classList.add('playing');
+    musicFrame.src = 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk';
+    playIcon.textContent = '⏸';
+    musicBtn.classList.add('playing');
     isPlaying = true;
   }
 }
 </script>
 
 <style>
-.music-player{position:fixed;bottom:20px;right:20px;z-index:1000}
-.music-toggle{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#d4af37,#b8941f);border:2px solid #d4af37;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s ease;box-shadow:0 4px 20px rgba(212,175,55,.4)}
-.music-toggle:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(212,175,55,.6)}
-.music-toggle.playing{animation:pulse 2s ease-in-out infinite}
-.music-icon{font-size:28px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.music-control{margin-top:3rem;text-align:center;animation:fadeIn 2s ease}
+#musicBtn{background:linear-gradient(135deg,#d4af37,#b8941f);border:2px solid #d4af37;color:#fff;padding:15px 40px;font-size:1rem;font-weight:600;letter-spacing:.1em;border-radius:50px;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 20px rgba(212,175,55,.4);display:inline-flex;align-items:center;gap:12px}
+#musicBtn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(212,175,55,.6)}
+#musicBtn.playing{animation:pulse 2s ease-in-out infinite}
+#playIcon{font-size:1.2rem}
+#musicLabel{font-size:.9rem}
 </style>
-</html>
