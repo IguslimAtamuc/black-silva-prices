@@ -7,6 +7,27 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;overflow-x:hidden}
+
+/* --- CLOCK STYLES --- */
+.clock-container {
+    margin-top: 2rem;
+    text-align: center;
+    animation: fadeInDown 1s ease;
+}
+#clock {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #d4af37; /* Matching the Gold Theme */
+    letter-spacing: 0.3em;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 10px 25px;
+    border-radius: 50px;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+/* -------------------- */
+
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);overflow:hidden}
 .hero:before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(212,175,55,.03) 2px,rgba(212,175,55,.03) 4px);pointer-events:none}
 .logo{font-size:clamp(3rem,8vw,6rem);font-weight:300;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem;text-align:center;animation:fadeInDown 1s ease}
@@ -35,54 +56,78 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
 @keyframes scaleIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 @keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.music-control{margin-top:3rem;text-align:center;animation:fadeIn 2s ease}
+#musicBtn{background:linear-gradient(135deg,#d4af37,#b8941f);border:2px solid #d4af37;color:#fff;padding:15px 40px;font-size:1rem;font-weight:600;letter-spacing:.1em;border-radius:50px;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 20px rgba(212,175,55,.4);display:inline-flex;align-items:center;gap:12px}
+#musicBtn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(212,175,55,.6)}
+#musicBtn.playing{animation:pulse 2s ease-in-out infinite}
+#playIcon{font-size:1.2rem}
+#musicLabel{font-size:.9rem}
 </style>
 </head>
 <body>
 <div class="hero">
-<h1 class="logo"><span>BLACK</span> SILVA</h1>
-<p class="tagline">PREMIUM BARBERING · KØBENHAVN</p>
-<div class="qr-container">
-<div class="qr-box">
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" alt="Scan to Book" class="qr-code"/>
-</div>
-<h2 class="scan-text">SCAN TO BOOK</h2>
-<p class="subtitle">Instant Online Booking</p>
-</div>
-<div class="services-highlight">
-<div class="service-card">
-<div class="service-icon">✂️</div>
-<h3 class="service-title">FADE HAIRCUT</h3>
-<p class="service-price">from 375 kr</p>
-</div>
-<div class="service-card">
-<div class="service-icon">💈</div>
-<h3 class="service-title">BEARD TRIM</h3>
-<p class="service-price">from 125 kr</p>
-</div>
-<div class="service-card">
-<div class="service-icon">👔</div>
-<h3 class="service-title">COMBO DEAL</h3>
-<p class="service-price">from 470 kr</p>
-</div>
-</div>
-<div class="footer">
-<p>BADSTUESTRÆDE 16 · 1209 KØBENHAVN K</p>
-<p style="margin-top:.5rem">WED 14:00-20:00 · THU-SUN 11:00-17:00</p>
-<p style="margin-top:1rem"><a href="https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" target="_blank">VIEW ALL SERVICES & PRICES</a></p>
-</div>
-</div>
-</body>
+    <div class="clock-container">
+        <div id="clock">00:00:00</div>
+    </div>
 
-<!-- Background Music Player -->
-<div class="music-control">
-  <button id="musicBtn" onclick="toggleMusic()" aria-label="Toggle music">
-    <span id="playIcon">▶</span>
-    <span id="musicLabel">BACKGROUND MUSIC</span>
-  </button>
-  <iframe id="musicFrame" style="display:none" allow="autoplay" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&loop=1&playlist=jfKfPfyJRdk" frameborder="0"></iframe>
+    <h1 class="logo"><span>BLACK</span> SILVA</h1>
+    <p class="tagline">PREMIUM BARBERING · KØBENHAVN</p>
+    
+    <div class="qr-container">
+        <div class="qr-box">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" alt="Scan to Book" class="qr-code"/>
+        </div>
+        <h2 class="scan-text">SCAN TO BOOK</h2>
+        <p class="subtitle">Instant Online Booking</p>
+    </div>
+
+    <div class="services-highlight">
+        <div class="service-card">
+            <div class="service-icon">✂️</div>
+            <h3 class="service-title">FADE HAIRCUT</h3>
+            <p class="service-price">375 kr</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">💈</div>
+            <h3 class="service-title">BEARD TRIM</h3>
+            <p class="service-price">125 kr</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">👔</div>
+            <h3 class="service-title">COMBO DEAL</h3>
+            <p class="service-price">470 kr</p>
+        </div>
+    </div>
+
+    <div class="music-control">
+        <button id="musicBtn" onclick="toggleMusic()" aria-label="Toggle music">
+            <span id="playIcon">▶</span>
+            <span id="musicLabel">BACKGROUND MUSIC</span>
+        </button>
+        <iframe id="musicFrame" style="display:none" allow="autoplay" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&loop=1&playlist=jfKfPfyJRdk" frameborder="0"></iframe>
+    </div>
+
+    <div class="footer">
+        <p>BADSTUESTRÆDE 16 · 1209 KØBENHAVN K</p>
+        <p style="margin-top:.5rem">WED 14:00-20:00 · THU-SUN 11:00-17:00</p>
+        <p style="margin-top:1rem"><a href="https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" target="_blank">VIEW ALL SERVICES & PRICES</a></p>
+    </div>
 </div>
 
 <script>
+// --- Clock Script ---
+function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+}
+setInterval(updateClock, 1000);
+updateClock(); // Initial call
+
+// --- Music Script ---
 let isPlaying = false;
 const musicBtn = document.getElementById('musicBtn');
 const musicFrame = document.getElementById('musicFrame');
@@ -102,12 +147,5 @@ function toggleMusic() {
   }
 }
 </script>
-
-<style>
-.music-control{margin-top:3rem;text-align:center;animation:fadeIn 2s ease}
-#musicBtn{background:linear-gradient(135deg,#d4af37,#b8941f);border:2px solid #d4af37;color:#fff;padding:15px 40px;font-size:1rem;font-weight:600;letter-spacing:.1em;border-radius:50px;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 20px rgba(212,175,55,.4);display:inline-flex;align-items:center;gap:12px}
-#musicBtn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(212,175,55,.6)}
-#musicBtn.playing{animation:pulse 2s ease-in-out infinite}
-#playIcon{font-size:1.2rem}
-#musicLabel{font-size:.9rem}
-</style>
+</body>
+</html>
