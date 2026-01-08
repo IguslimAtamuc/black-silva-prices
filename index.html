@@ -200,8 +200,11 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
                 <p>PREMIUM AUDIO</p>
                 <h4>Relaxing Studio Beats</h4>
             </div>
-            <audio id="bg-music" crossorigin="anonymous">
-                <source src="https://stream.relaxfm.online/relax128.mp3" type="audio/mpeg">
+            <audio id="bg-music" preload="none" crossorigin="anonymous">
+                <source src="https://icecast.unitedradio.it/Relax.mp3" type="audio/mpeg">
+            </audio>
+            <audio id="finish-sound">
+                <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
             </audio>
         </div>
     </div>
@@ -278,7 +281,9 @@ function startTimer() {
         if (totalSeconds <= 0) {
             clearInterval(timerInterval);
             timerInterval = null;
-            finishService();
+            document.getElementById('finish-sound').play();
+            alert("Service Complete!");
+            manualReset();
             return;
         }
         totalSeconds--;
@@ -292,11 +297,6 @@ function startTimer() {
             timerText.style.color = "#ff4d4d";
         }
     }, 1000);
-}
-
-function finishService() {
-    alert("Service Complete!");
-    manualReset();
 }
 
 function manualReset() {
@@ -322,17 +322,18 @@ function manualReset() {
 // --- MUSIC PLAYER LOGIC ---
 const audio = document.getElementById('bg-music');
 const musicBtn = document.getElementById('play-pause-btn');
-audio.volume = 0.4; // Set to a relaxing volume
+audio.volume = 0.4;
 
 function toggleMusic() {
     if (audio.paused) {
-        // We re-load the stream to ensure it starts live and fresh
-        audio.load();
         audio.play().then(() => {
             musicBtn.textContent = '⏸';
-        }).catch(error => {
-            console.log("Playback failed:", error);
-            alert("Please click 'Start' or 'Play' again to enable audio.");
+        }).catch(err => {
+            console.log("Stream error:", err);
+            // If the stream dies, we try to reload it
+            audio.load();
+            audio.play();
+            musicBtn.textContent = '⏸';
         });
     } else {
         audio.pause();
