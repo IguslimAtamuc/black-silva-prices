@@ -9,146 +9,42 @@
 body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;overflow-x:hidden}
 
 /* --- CLOCK STYLES --- */
-.clock-container {
-    margin-top: 2rem;
-    text-align: center;
-    animation: fadeInDown 1s ease;
-}
+.clock-container { margin-top: 2rem; text-align: center; animation: fadeInDown 1s ease; }
 #clock {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: #d4af37;
-    letter-spacing: 0.3em;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    padding: 10px 25px;
-    border-radius: 50px;
-    display: inline-block;
-    background: rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem; font-weight: 300; color: #d4af37; letter-spacing: 0.3em;
+    border: 1px solid rgba(212, 175, 55, 0.3); padding: 10px 25px;
+    border-radius: 50px; display: inline-block; background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
 }
 
 /* --- TIMER SYSTEM STYLES --- */
-.timer-section {
-    margin: 2rem auto;
-    text-align: center;
-    max-width: 600px;
-    width: 90%;
-    z-index: 10;
-}
-#active-timer-display {
-    font-size: 4rem;
-    font-weight: 700;
-    color: #d4af37;
-    margin-bottom: 10px;
-    font-variant-numeric: tabular-nums;
-}
-.progress-container {
-    width: 100%;
-    height: 8px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-#progress-bar {
-    width: 0%;
-    height: 100%;
-    background: #d4af37;
-    transition: width 1s linear, background-color 0.5s ease;
-}
+.timer-section { margin: 2rem auto; text-align: center; max-width: 600px; width: 90%; z-index: 10; }
+#active-timer-display { font-size: 4rem; font-weight: 700; color: #d4af37; margin-bottom: 10px; font-variant-numeric: tabular-nums; }
+.progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+#progress-bar { width: 0%; height: 100%; background: #d4af37; transition: width 1s linear, background-color 0.5s ease; }
 
 /* --- SERVICE SELECTION --- */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);padding-bottom: 50px;}
 .logo{font-size:clamp(2.5rem,6vw,5rem);font-weight:300;letter-spacing:.2em;text-transform:uppercase;margin-top:2rem;text-align:center;}
 .logo span{color:#d4af37;font-weight:600}
 
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    width: 90%;
-    max-width: 800px;
-    margin-top: 20px;
-}
+.services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 90%; max-width: 800px; margin-top: 20px; }
 .service-btn {
-    background: #111;
-    border: 1px solid rgba(212, 175, 55, 0.5);
-    color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: #111; border: 1px solid rgba(212, 175, 55, 0.5); color: #fff;
+    padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s;
+    display: flex; flex-direction: column; align-items: center;
 }
-.service-btn.selected {
-    background: #d4af37;
-    color: #000;
-    border-color: #fff;
-}
+.service-btn.selected { background: #d4af37; color: #000; border-color: #fff; }
 .service-btn span { font-size: 0.8rem; opacity: 0.8; }
 
-.control-btns {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 25px;
-}
-
-#start-btn, #reset-btn {
-    padding: 12px 30px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 50px;
-    text-transform: uppercase;
-    transition: 0.3s;
-    font-size: 0.9rem;
-}
-
-#start-btn {
-    background: #d4af37;
-    border: 2px solid #d4af37;
-    color: #000;
-}
-#start-btn:hover { background: transparent; color: #d4af37; }
-
-#reset-btn {
-    background: transparent;
-    border: 2px solid #ff4d4d;
-    color: #ff4d4d;
-}
-#reset-btn:hover { background: #ff4d4d; color: #fff; }
+.control-btns { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
+#start-btn, #reset-btn { padding: 12px 30px; font-weight: bold; cursor: pointer; border-radius: 50px; text-transform: uppercase; transition: 0.3s; font-size: 0.9rem; }
+#start-btn { background: #d4af37; border: 2px solid #d4af37; color: #000; }
+#reset-btn { background: transparent; border: 2px solid #ff4d4d; color: #ff4d4d; }
 
 /* --- MUSIC PLAYER STYLES --- */
-.music-player {
-    margin-top: 30px;
-    padding: 15px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    justify-content: center;
-}
-.music-info { text-align: left; }
-.music-info p { font-size: 0.7rem; color: #888; margin-bottom: 2px; }
-.music-info h4 { font-size: 0.9rem; color: #d4af37; }
-
-#play-pause-btn {
-    background: #d4af37;
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-}
+.music-player { margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(212, 175, 55, 0.2); justify-content: center; }
+#play-pause-btn { background: #d4af37; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
 
 .qr-container{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:3px solid #d4af37;border-radius:30px;padding:2rem;margin-top:2rem;}
 .qr-box{background:#fff;padding:1rem;border-radius:15px;}
@@ -175,18 +71,10 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
         </div>
         
         <div class="services-grid">
-            <button class="service-btn" data-time="50" onclick="toggleService(this)">
-                FADE <span>50 MIN</span>
-            </button>
-            <button class="service-btn" data-time="30" onclick="toggleService(this)">
-                UNDERCUT <span>30 MIN</span>
-            </button>
-            <button class="service-btn" data-time="20" onclick="toggleService(this)">
-                BEARD <span>20 MIN</span>
-            </button>
-            <button class="service-btn" data-time="5" onclick="toggleService(this)">
-                HAIR WASH <span>5 MIN</span>
-            </button>
+            <button class="service-btn" data-time="50" onclick="toggleService(this)">FADE <span>50 MIN</span></button>
+            <button class="service-btn" data-time="30" onclick="toggleService(this)">UNDERCUT <span>30 MIN</span></button>
+            <button class="service-btn" data-time="20" onclick="toggleService(this)">BEARD <span>20 MIN</span></button>
+            <button class="service-btn" data-time="5" onclick="toggleService(this)">HAIR WASH <span>5 MIN</span></button>
         </div>
         
         <div class="control-btns">
@@ -196,18 +84,15 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
 
         <div class="music-player">
             <button id="play-pause-btn" onclick="toggleMusic()">▶</button>
-            <div class="music-info">
-                <p>PREMIUM AUDIO</p>
-                <h4>Relaxing Studio Beats</h4>
+            <div style="text-align:left">
+                <p style="font-size:0.7rem; color:#888;">PREMIUM AUDIO</p>
+                <h4 style="font-size:0.9rem; color:#d4af37;">Relaxing Studio Beats</h4>
             </div>
-            <audio id="bg-music" preload="none" crossorigin="anonymous">
-                <source src="https://icecast.unitedradio.it/Relax.mp3" type="audio/mpeg">
-            </audio>
-            <audio id="finish-sound">
-                <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
-            </audio>
+            <div id="yt-player" style="display:none"></div>
         </div>
     </div>
+
+    <audio id="finish-sound"><source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg"></audio>
 
     <div class="qr-container">
         <div class="qr-box">
@@ -216,36 +101,23 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
         <p style="text-align:center; margin-top:10px; color:#d4af37; font-weight:bold;">SCAN TO BOOK</p>
     </div>
 
-    <div class="footer">
-        <p>BADSTUESTRÆDE 16 · 1209 KØBENHAVN K</p>
-    </div>
+    <div class="footer"><p>BADSTUESTRÆDE 16 · 1209 KØBENHAVN K</p></div>
 </div>
 
 <script>
 // --- DENMARK CLOCK SCRIPT ---
 function updateClock() {
-    const options = {
-        timeZone: 'Europe/Copenhagen',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    };
-    const denmarkTime = new Intl.DateTimeFormat('en-GB', options).format(new Date());
-    document.getElementById('clock').textContent = denmarkTime;
+    const options = { timeZone: 'Europe/Copenhagen', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    document.getElementById('clock').textContent = new Intl.DateTimeFormat('en-GB', options).format(new Date());
 }
 setInterval(updateClock, 1000);
 updateClock();
 
 // --- TIMER LOGIC ---
-let totalSeconds = 0;
-let initialSeconds = 0;
-let timerInterval = null;
-let selectedMinutes = 0;
+let totalSeconds = 0, initialSeconds = 0, timerInterval = null, selectedMinutes = 0;
 
 function toggleService(btn) {
     if (timerInterval) return; 
-    
     const minutes = parseInt(btn.getAttribute('data-time'));
     if (btn.classList.contains('selected')) {
         btn.classList.remove('selected');
@@ -260,22 +132,15 @@ function toggleService(btn) {
 function updateTimerDisplay(secs) {
     const mins = Math.floor(secs / 60);
     const s = secs % 60;
-    document.getElementById('active-timer-display').textContent = 
-        `${String(mins).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    document.getElementById('active-timer-display').textContent = `${String(mins).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
 function startTimer() {
     if (selectedMinutes <= 0 || timerInterval) return;
-    
     totalSeconds = selectedMinutes * 60;
     initialSeconds = totalSeconds;
-    
-    const progressBar = document.getElementById('progress-bar');
-    const timerText = document.getElementById('active-timer-display');
     const startBtn = document.getElementById('start-btn');
-    
-    startBtn.style.opacity = '0.5';
-    startBtn.disabled = true;
+    startBtn.style.opacity = '0.5'; startBtn.disabled = true;
 
     timerInterval = setInterval(() => {
         if (totalSeconds <= 0) {
@@ -288,57 +153,53 @@ function startTimer() {
         }
         totalSeconds--;
         updateTimerDisplay(totalSeconds);
-        
         const percentage = (totalSeconds / initialSeconds) * 100;
-        progressBar.style.width = percentage + "%";
-        
+        document.getElementById('progress-bar').style.width = percentage + "%";
         if (percentage < 20) {
-            progressBar.style.backgroundColor = "#ff4d4d";
-            timerText.style.color = "#ff4d4d";
+            document.getElementById('progress-bar').style.backgroundColor = "#ff4d4d";
+            document.getElementById('active-timer-display').style.color = "#ff4d4d";
         }
     }, 1000);
 }
 
 function manualReset() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    selectedMinutes = 0;
-    totalSeconds = 0;
-    
+    clearInterval(timerInterval); timerInterval = null; selectedMinutes = 0; totalSeconds = 0;
     const startBtn = document.getElementById('start-btn');
-    startBtn.style.opacity = '1';
-    startBtn.disabled = false;
-    
+    startBtn.style.opacity = '1'; startBtn.disabled = false;
     document.getElementById('active-timer-display').style.color = '#d4af37';
     document.getElementById('progress-bar').style.backgroundColor = '#d4af37';
     document.getElementById('progress-bar').style.width = '0%';
-    
-    document.querySelectorAll('.service-btn').forEach(btn => {
-        btn.classList.remove('selected');
-    });
+    document.querySelectorAll('.service-btn').forEach(btn => btn.classList.remove('selected'));
     updateTimerDisplay(0);
 }
 
-// --- MUSIC PLAYER LOGIC ---
-const audio = document.getElementById('bg-music');
-const musicBtn = document.getElementById('play-pause-btn');
-audio.volume = 0.4;
+// --- YOUTUBE API MUSIC PLAYER ---
+var player;
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('yt-player', {
+        height: '0', width: '0',
+        videoId: 'jfKfPfyJRdk', // This is a relaxing lo-fi live/video ID
+        playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'jfKfPfyJRdk' },
+        events: { 'onStateChange': onPlayerStateChange }
+    });
+}
+
+function onPlayerStateChange(event) {
+    const btn = document.getElementById('play-pause-btn');
+    if (event.data == YT.PlayerState.PLAYING) { btn.textContent = '⏸'; } 
+    else { btn.textContent = '▶'; }
+}
 
 function toggleMusic() {
-    if (audio.paused) {
-        audio.play().then(() => {
-            musicBtn.textContent = '⏸';
-        }).catch(err => {
-            console.log("Stream error:", err);
-            // If the stream dies, we try to reload it
-            audio.load();
-            audio.play();
-            musicBtn.textContent = '⏸';
-        });
-    } else {
-        audio.pause();
-        musicBtn.textContent = '▶';
-    }
+    if (!player) return;
+    const state = player.getPlayerState();
+    if (state == YT.PlayerState.PLAYING) { player.pauseVideo(); } 
+    else { player.playVideo(); }
 }
 </script>
 </body>
