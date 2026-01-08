@@ -115,10 +115,10 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
 
 #reset-btn {
     background: transparent;
-    border: 2px solid #666;
-    color: #666;
+    border: 2px solid #ff4d4d;
+    color: #ff4d4d;
 }
-#reset-btn:hover { border-color: #ff4d4d; color: #ff4d4d; }
+#reset-btn:hover { background: #ff4d4d; color: #fff; }
 
 /* --- MUSIC PLAYER STYLES --- */
 .music-player {
@@ -130,6 +130,7 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
     align-items: center;
     gap: 15px;
     border: 1px solid rgba(212, 175, 55, 0.2);
+    justify-content: center;
 }
 .music-info { text-align: left; }
 .music-info p { font-size: 0.7rem; color: #888; margin-bottom: 2px; }
@@ -138,21 +139,23 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
 #play-pause-btn {
     background: #d4af37;
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
 }
 
-/* Existing styles preserved */
 .qr-container{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:3px solid #d4af37;border-radius:30px;padding:2rem;margin-top:2rem;}
 .qr-box{background:#fff;padding:1rem;border-radius:15px;}
 .qr-code{width:120px;height:120px;display:block}
 .footer{margin-top:3rem;text-align:center;padding:2rem;color:#666;font-size:.8rem;}
+
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -188,17 +191,17 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
         
         <div class="control-btns">
             <button id="start-btn" onclick="startTimer()">Start Service</button>
-            <button id="reset-btn" onclick="manualReset()">Reset</button>
+            <button id="reset-btn" onclick="manualReset()">Reset Timer</button>
         </div>
 
         <div class="music-player">
             <button id="play-pause-btn" onclick="toggleMusic()">▶</button>
             <div class="music-info">
-                <p>NOW PLAYING</p>
-                <h4>Relaxing Lo-Fi Beats</h4>
+                <p>PREMIUM AUDIO</p>
+                <h4>Relaxing Studio Beats</h4>
             </div>
-            <audio id="bg-music" loop>
-                <source src="https://stream.zeno.fm/f3v5u8p7u8hvv" type="audio/mpeg">
+            <audio id="bg-music" crossorigin="anonymous">
+                <source src="https://stream.relaxfm.online/relax128.mp3" type="audio/mpeg">
             </audio>
         </div>
     </div>
@@ -272,6 +275,12 @@ function startTimer() {
     startBtn.disabled = true;
 
     timerInterval = setInterval(() => {
+        if (totalSeconds <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            finishService();
+            return;
+        }
         totalSeconds--;
         updateTimerDisplay(totalSeconds);
         
@@ -281,12 +290,6 @@ function startTimer() {
         if (percentage < 20) {
             progressBar.style.backgroundColor = "#ff4d4d";
             timerText.style.color = "#ff4d4d";
-        }
-
-        if (totalSeconds <= 0) {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            finishService();
         }
     }, 1000);
 }
@@ -319,11 +322,18 @@ function manualReset() {
 // --- MUSIC PLAYER LOGIC ---
 const audio = document.getElementById('bg-music');
 const musicBtn = document.getElementById('play-pause-btn');
+audio.volume = 0.4; // Set to a relaxing volume
 
 function toggleMusic() {
     if (audio.paused) {
-        audio.play();
-        musicBtn.textContent = '⏸';
+        // We re-load the stream to ensure it starts live and fresh
+        audio.load();
+        audio.play().then(() => {
+            musicBtn.textContent = '⏸';
+        }).catch(error => {
+            console.log("Playback failed:", error);
+            alert("Please click 'Start' or 'Play' again to enable audio.");
+        });
     } else {
         audio.pause();
         musicBtn.textContent = '▶';
