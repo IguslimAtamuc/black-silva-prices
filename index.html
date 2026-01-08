@@ -72,7 +72,7 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
 }
 .service-btn {
     background: #111;
-    border: 1px solid #d4af37;
+    border: 1px solid rgba(212, 175, 55, 0.5);
     color: #fff;
     padding: 20px;
     border-radius: 15px;
@@ -85,26 +85,73 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
 .service-btn.selected {
     background: #d4af37;
     color: #000;
+    border-color: #fff;
 }
 .service-btn span { font-size: 0.8rem; opacity: 0.8; }
 
-#start-btn {
-    margin-top: 20px;
-    padding: 15px 40px;
-    background: transparent;
-    border: 2px solid #d4af37;
-    color: #d4af37;
+.control-btns {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+#start-btn, #reset-btn {
+    padding: 12px 30px;
     font-weight: bold;
     cursor: pointer;
     border-radius: 50px;
     text-transform: uppercase;
+    transition: 0.3s;
+    font-size: 0.9rem;
 }
-#start-btn:hover { background: #d4af37; color: #000; }
+
+#start-btn {
+    background: #d4af37;
+    border: 2px solid #d4af37;
+    color: #000;
+}
+#start-btn:hover { background: transparent; color: #d4af37; }
+
+#reset-btn {
+    background: transparent;
+    border: 2px solid #666;
+    color: #666;
+}
+#reset-btn:hover { border-color: #ff4d4d; color: #ff4d4d; }
+
+/* --- MUSIC PLAYER STYLES --- */
+.music-player {
+    margin-top: 30px;
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+.music-info { text-align: left; }
+.music-info p { font-size: 0.7rem; color: #888; margin-bottom: 2px; }
+.music-info h4 { font-size: 0.9rem; color: #d4af37; }
+
+#play-pause-btn {
+    background: #d4af37;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
 
 /* Existing styles preserved */
 .qr-container{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:3px solid #d4af37;border-radius:30px;padding:2rem;margin-top:2rem;}
 .qr-box{background:#fff;padding:1rem;border-radius:15px;}
-.qr-code{width:150px;height:150px;display:block}
+.qr-code{width:120px;height:120px;display:block}
 .footer{margin-top:3rem;text-align:center;padding:2rem;color:#666;font-size:.8rem;}
 </style>
 </head>
@@ -139,7 +186,21 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
             </button>
         </div>
         
-        <button id="start-btn" onclick="startTimer()">Start Service</button>
+        <div class="control-btns">
+            <button id="start-btn" onclick="startTimer()">Start Service</button>
+            <button id="reset-btn" onclick="manualReset()">Reset</button>
+        </div>
+
+        <div class="music-player">
+            <button id="play-pause-btn" onclick="toggleMusic()">▶</button>
+            <div class="music-info">
+                <p>NOW PLAYING</p>
+                <h4>Relaxing Lo-Fi Beats</h4>
+            </div>
+            <audio id="bg-music" loop>
+                <source src="https://stream.zeno.fm/f3v5u8p7u8hvv" type="audio/mpeg">
+            </audio>
+        </div>
     </div>
 
     <div class="qr-container">
@@ -177,7 +238,7 @@ let timerInterval = null;
 let selectedMinutes = 0;
 
 function toggleService(btn) {
-    if (timerInterval) return; // Prevent selection during active timer
+    if (timerInterval) return; 
     
     const minutes = parseInt(btn.getAttribute('data-time'));
     if (btn.classList.contains('selected')) {
@@ -187,7 +248,6 @@ function toggleService(btn) {
         btn.classList.add('selected');
         selectedMinutes += minutes;
     }
-    
     updateTimerDisplay(selectedMinutes * 60);
 }
 
@@ -208,18 +268,16 @@ function startTimer() {
     const timerText = document.getElementById('active-timer-display');
     const startBtn = document.getElementById('start-btn');
     
-    startBtn.style.display = 'none';
+    startBtn.style.opacity = '0.5';
+    startBtn.disabled = true;
 
     timerInterval = setInterval(() => {
         totalSeconds--;
         updateTimerDisplay(totalSeconds);
         
-        // Update Progress Bar
         const percentage = (totalSeconds / initialSeconds) * 100;
         progressBar.style.width = percentage + "%";
         
-        // Color transition (Gold to Red)
-        // Starts turning red when below 20%
         if (percentage < 20) {
             progressBar.style.backgroundColor = "#ff4d4d";
             timerText.style.color = "#ff4d4d";
@@ -228,16 +286,26 @@ function startTimer() {
         if (totalSeconds <= 0) {
             clearInterval(timerInterval);
             timerInterval = null;
-            resetSystem();
+            finishService();
         }
     }, 1000);
 }
 
-function resetSystem() {
+function finishService() {
     alert("Service Complete!");
+    manualReset();
+}
+
+function manualReset() {
+    clearInterval(timerInterval);
+    timerInterval = null;
     selectedMinutes = 0;
     totalSeconds = 0;
-    document.getElementById('start-btn').style.display = 'inline-block';
+    
+    const startBtn = document.getElementById('start-btn');
+    startBtn.style.opacity = '1';
+    startBtn.disabled = false;
+    
     document.getElementById('active-timer-display').style.color = '#d4af37';
     document.getElementById('progress-bar').style.backgroundColor = '#d4af37';
     document.getElementById('progress-bar').style.width = '0%';
@@ -246,6 +314,20 @@ function resetSystem() {
         btn.classList.remove('selected');
     });
     updateTimerDisplay(0);
+}
+
+// --- MUSIC PLAYER LOGIC ---
+const audio = document.getElementById('bg-music');
+const musicBtn = document.getElementById('play-pause-btn');
+
+function toggleMusic() {
+    if (audio.paused) {
+        audio.play();
+        musicBtn.textContent = '⏸';
+    } else {
+        audio.pause();
+        musicBtn.textContent = '▶';
+    }
 }
 </script>
 </body>
