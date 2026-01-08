@@ -17,7 +17,7 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
 #clock {
     font-size: 1.5rem;
     font-weight: 300;
-    color: #d4af37; /* Matching the Gold Theme */
+    color: #d4af37;
     letter-spacing: 0.3em;
     border: 1px solid rgba(212, 175, 55, 0.3);
     padding: 10px 25px;
@@ -26,125 +26,226 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
 }
-/* -------------------- */
 
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);overflow:hidden}
-.hero:before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(212,175,55,.03) 2px,rgba(212,175,55,.03) 4px);pointer-events:none}
-.logo{font-size:clamp(3rem,8vw,6rem);font-weight:300;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem;text-align:center;animation:fadeInDown 1s ease}
+/* --- TIMER SYSTEM STYLES --- */
+.timer-section {
+    margin: 2rem auto;
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    z-index: 10;
+}
+#active-timer-display {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #d4af37;
+    margin-bottom: 10px;
+    font-variant-numeric: tabular-nums;
+}
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #d4af37;
+    transition: width 1s linear, background-color 0.5s ease;
+}
+
+/* --- SERVICE SELECTION --- */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);padding-bottom: 50px;}
+.logo{font-size:clamp(2.5rem,6vw,5rem);font-weight:300;letter-spacing:.2em;text-transform:uppercase;margin-top:2rem;text-align:center;}
 .logo span{color:#d4af37;font-weight:600}
-.tagline{font-size:clamp(1rem,2.5vw,1.5rem);color:#888;letter-spacing:.15em;margin-bottom:3rem;text-align:center;animation:fadeIn 1.5s ease}
-.qr-container{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:3px solid #d4af37;border-radius:30px;padding:3rem;box-shadow:0 30px 90px rgba(212,175,55,.3),inset 0 1px 0 rgba(255,255,255,.1);animation:scaleIn 1s ease;position:relative;overflow:hidden}
-.qr-container:before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(212,175,55,.1) 0%,transparent 70%);animation:rotate 20s linear infinite}
-.qr-box{background:#fff;padding:2rem;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.5);position:relative;z-index:1}
-.qr-code{width:clamp(200px,25vw,300px);height:clamp(200px,25vw,300px);display:block}
-.scan-text{font-size:clamp(1.2rem,3vw,2rem);font-weight:700;text-transform:uppercase;letter-spacing:.2em;margin-top:2rem;text-align:center;color:#d4af37;animation:pulse 2s ease infinite;text-shadow:0 0 20px rgba(212,175,55,.5)}
-.subtitle{font-size:clamp(.9rem,2vw,1.2rem);color:#aaa;text-align:center;margin-top:.5rem;letter-spacing:.1em}
-.services-highlight{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-top:4rem;max-width:1200px;width:90%;animation:fadeInUp 1.5s ease}
-.service-card{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:1px solid rgba(212,175,55,.3);border-radius:20px;padding:2rem;text-align:center;transition:all .3s ease;position:relative;overflow:hidden}
-.service-card:hover{transform:translateY(-10px);border-color:#d4af37;box-shadow:0 20px 60px rgba(212,175,55,.4)}
-.service-card:before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(212,175,55,.1),transparent);transition:left .5s}
-.service-card:hover:before{left:100%}
-.service-icon{font-size:3rem;margin-bottom:1rem}
-.service-title{font-size:1.3rem;font-weight:600;color:#d4af37;margin-bottom:.5rem;letter-spacing:.1em}
-.service-price{font-size:2rem;font-weight:300;color:#fff;margin-top:.5rem}
-.footer{margin-top:4rem;text-align:center;padding:2rem;color:#666;font-size:.9rem;letter-spacing:.1em}
-.footer a{color:#d4af37;text-decoration:none;transition:color .3s}
-.footer a:hover{color:#fff}
-@keyframes fadeInDown{from{opacity:0;transform:translateY(-50px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-.music-control{margin-top:3rem;text-align:center;animation:fadeIn 2s ease}
-#musicBtn{background:linear-gradient(135deg,#d4af37,#b8941f);border:2px solid #d4af37;color:#fff;padding:15px 40px;font-size:1rem;font-weight:600;letter-spacing:.1em;border-radius:50px;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 20px rgba(212,175,55,.4);display:inline-flex;align-items:center;gap:12px}
-#musicBtn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(212,175,55,.6)}
-#musicBtn.playing{animation:pulse 2s ease-in-out infinite}
-#playIcon{font-size:1.2rem}
-#musicLabel{font-size:.9rem}
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    width: 90%;
+    max-width: 800px;
+    margin-top: 20px;
+}
+.service-btn {
+    background: #111;
+    border: 1px solid #d4af37;
+    color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.service-btn.selected {
+    background: #d4af37;
+    color: #000;
+}
+.service-btn span { font-size: 0.8rem; opacity: 0.8; }
+
+#start-btn {
+    margin-top: 20px;
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50px;
+    text-transform: uppercase;
+}
+#start-btn:hover { background: #d4af37; color: #000; }
+
+/* Existing styles preserved */
+.qr-container{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:3px solid #d4af37;border-radius:30px;padding:2rem;margin-top:2rem;}
+.qr-box{background:#fff;padding:1rem;border-radius:15px;}
+.qr-code{width:150px;height:150px;display:block}
+.footer{margin-top:3rem;text-align:center;padding:2rem;color:#666;font-size:.8rem;}
 </style>
 </head>
 <body>
+
 <div class="hero">
     <div class="clock-container">
         <div id="clock">00:00:00</div>
+        <p style="font-size: 0.7rem; color: #888; margin-top: 5px; letter-spacing: 2px;">COPENHAGEN TIME</p>
     </div>
 
     <h1 class="logo"><span>BLACK</span> SILVA</h1>
-    <p class="tagline">PREMIUM BARBERING · KØBENHAVN</p>
-    
+
+    <div class="timer-section">
+        <div id="active-timer-display">00:00</div>
+        <div class="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        
+        <div class="services-grid">
+            <button class="service-btn" data-time="50" onclick="toggleService(this)">
+                FADE <span>50 MIN</span>
+            </button>
+            <button class="service-btn" data-time="30" onclick="toggleService(this)">
+                UNDERCUT <span>30 MIN</span>
+            </button>
+            <button class="service-btn" data-time="20" onclick="toggleService(this)">
+                BEARD <span>20 MIN</span>
+            </button>
+            <button class="service-btn" data-time="5" onclick="toggleService(this)">
+                HAIR WASH <span>5 MIN</span>
+            </button>
+        </div>
+        
+        <button id="start-btn" onclick="startTimer()">Start Service</button>
+    </div>
+
     <div class="qr-container">
         <div class="qr-box">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" alt="Scan to Book" class="qr-code"/>
         </div>
-        <h2 class="scan-text">SCAN TO BOOK</h2>
-        <p class="subtitle">Instant Online Booking</p>
-    </div>
-
-    <div class="services-highlight">
-        <div class="service-card">
-            <div class="service-icon">✂️</div>
-            <h3 class="service-title">FADE HAIRCUT</h3>
-            <p class="service-price">375 kr</p>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">💈</div>
-            <h3 class="service-title">BEARD TRIM</h3>
-            <p class="service-price">125 kr</p>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">👔</div>
-            <h3 class="service-title">COMBO DEAL</h3>
-            <p class="service-price">470 kr</p>
-        </div>
-    </div>
-
-    <div class="music-control">
-        <button id="musicBtn" onclick="toggleMusic()" aria-label="Toggle music">
-            <span id="playIcon">▶</span>
-            <span id="musicLabel">BACKGROUND MUSIC</span>
-        </button>
-        <iframe id="musicFrame" style="display:none" allow="autoplay" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&loop=1&playlist=jfKfPfyJRdk" frameborder="0"></iframe>
+        <p style="text-align:center; margin-top:10px; color:#d4af37; font-weight:bold;">SCAN TO BOOK</p>
     </div>
 
     <div class="footer">
         <p>BADSTUESTRÆDE 16 · 1209 KØBENHAVN K</p>
-        <p style="margin-top:.5rem">WED 14:00-20:00 · THU-SUN 11:00-17:00</p>
-        <p style="margin-top:1rem"><a href="https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" target="_blank">VIEW ALL SERVICES & PRICES</a></p>
     </div>
 </div>
 
 <script>
-// --- Clock Script ---
+// --- DENMARK CLOCK SCRIPT ---
 function updateClock() {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    const options = {
+        timeZone: 'Europe/Copenhagen',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    };
+    const denmarkTime = new Intl.DateTimeFormat('en-GB', options).format(new Date());
+    document.getElementById('clock').textContent = denmarkTime;
 }
 setInterval(updateClock, 1000);
-updateClock(); // Initial call
+updateClock();
 
-// --- Music Script ---
-let isPlaying = false;
-const musicBtn = document.getElementById('musicBtn');
-const musicFrame = document.getElementById('musicFrame');
-const playIcon = document.getElementById('playIcon');
+// --- TIMER LOGIC ---
+let totalSeconds = 0;
+let initialSeconds = 0;
+let timerInterval = null;
+let selectedMinutes = 0;
 
-function toggleMusic() {
-  if (isPlaying) {
-    musicFrame.src = 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&loop=1&playlist=jfKfPfyJRdk';
-    playIcon.textContent = '▶';
-    musicBtn.classList.remove('playing');
-    isPlaying = false;
-  } else {
-    musicFrame.src = 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk';
-    playIcon.textContent = '⏸';
-    musicBtn.classList.add('playing');
-    isPlaying = true;
-  }
+function toggleService(btn) {
+    if (timerInterval) return; // Prevent selection during active timer
+    
+    const minutes = parseInt(btn.getAttribute('data-time'));
+    if (btn.classList.contains('selected')) {
+        btn.classList.remove('selected');
+        selectedMinutes -= minutes;
+    } else {
+        btn.classList.add('selected');
+        selectedMinutes += minutes;
+    }
+    
+    updateTimerDisplay(selectedMinutes * 60);
+}
+
+function updateTimerDisplay(secs) {
+    const mins = Math.floor(secs / 60);
+    const s = secs % 60;
+    document.getElementById('active-timer-display').textContent = 
+        `${String(mins).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+function startTimer() {
+    if (selectedMinutes <= 0 || timerInterval) return;
+    
+    totalSeconds = selectedMinutes * 60;
+    initialSeconds = totalSeconds;
+    
+    const progressBar = document.getElementById('progress-bar');
+    const timerText = document.getElementById('active-timer-display');
+    const startBtn = document.getElementById('start-btn');
+    
+    startBtn.style.display = 'none';
+
+    timerInterval = setInterval(() => {
+        totalSeconds--;
+        updateTimerDisplay(totalSeconds);
+        
+        // Update Progress Bar
+        const percentage = (totalSeconds / initialSeconds) * 100;
+        progressBar.style.width = percentage + "%";
+        
+        // Color transition (Gold to Red)
+        // Starts turning red when below 20%
+        if (percentage < 20) {
+            progressBar.style.backgroundColor = "#ff4d4d";
+            timerText.style.color = "#ff4d4d";
+        }
+
+        if (totalSeconds <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            resetSystem();
+        }
+    }, 1000);
+}
+
+function resetSystem() {
+    alert("Service Complete!");
+    selectedMinutes = 0;
+    totalSeconds = 0;
+    document.getElementById('start-btn').style.display = 'inline-block';
+    document.getElementById('active-timer-display').style.color = '#d4af37';
+    document.getElementById('progress-bar').style.backgroundColor = '#d4af37';
+    document.getElementById('progress-bar').style.width = '0%';
+    
+    document.querySelectorAll('.service-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    updateTimerDisplay(0);
 }
 </script>
 </body>
