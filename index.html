@@ -85,8 +85,8 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;ov
         <div class="music-player">
             <button id="play-pause-btn" onclick="toggleMusic()">▶</button>
             <div style="text-align:left">
-                <p style="font-size:0.7rem; color:#888;">PREMIUM AUDIO</p>
-                <h4 style="font-size:0.9rem; color:#d4af37;">Relaxing Studio Beats</h4>
+                <p style="font-size:0.7rem; color:#888;">COMMERCIAL SAFE</p>
+                <h4 style="font-size:0.9rem; color:#d4af37;">AI Generated Lo-Fi</h4>
             </div>
             <div id="yt-player" style="display:none"></div>
         </div>
@@ -173,7 +173,7 @@ function manualReset() {
     updateTimerDisplay(0);
 }
 
-// --- YOUTUBE API MUSIC PLAYER ---
+// --- YOUTUBE API (AI LO-FI) ---
 var player;
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
@@ -183,8 +183,13 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('yt-player', {
         height: '0', width: '0',
-        videoId: 'jfKfPfyJRdk', // This is a relaxing lo-fi live/video ID
-        playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'jfKfPfyJRdk' },
+        videoId: 'f02mOEt11OQ', // Verified AI-Generated No Copyright Lo-fi
+        playerVars: { 
+            'autoplay': 0, 
+            'controls': 0, 
+            'loop': 1, 
+            'playlist': 'f02mOEt11OQ' 
+        },
         events: { 'onStateChange': onPlayerStateChange }
     });
 }
@@ -196,7 +201,7 @@ function onPlayerStateChange(event) {
 }
 
 function toggleMusic() {
-    if (!player) return;
+    if (!player || typeof player.getPlayerState !== 'function') return;
     const state = player.getPlayerState();
     if (state == YT.PlayerState.PLAYING) { player.pauseVideo(); } 
     else { player.playVideo(); }
