@@ -8,6 +8,7 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;overflow-x:hidden}
 
+        /* --- CLOCK --- */
         .clock-container { margin-top: 2rem; text-align: center; animation: fadeInDown 1s ease; }
         #clock {
             font-size: 1.5rem; font-weight: 300; color: #d4af37; letter-spacing: 0.3em;
@@ -16,6 +17,7 @@
             backdrop-filter: blur(5px);
         }
 
+        /* --- TIMER --- */
         .timer-section { margin: 2rem auto; text-align: center; max-width: 600px; width: 90%; z-index: 10; }
         #active-timer-display { font-size: 4rem; font-weight: 700; color: #d4af37; margin-bottom: 10px; font-variant-numeric: tabular-nums; }
         .progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
@@ -39,6 +41,7 @@
         #start-btn { background: #d4af37; border: 2px solid #d4af37; color: #000; }
         #reset-btn { background: transparent; border: 2px solid #ff4d4d; color: #ff4d4d; }
 
+        /* --- MUSIC PLAYER --- */
         .music-player { margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(212, 175, 55, 0.2); justify-content: center; }
         #play-pause-btn { background: #d4af37; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
 
@@ -46,16 +49,6 @@
         .qr-box{background:#fff;padding:1rem;border-radius:15px;}
         .qr-code{width:120px;height:120px;display:block}
         .footer{margin-top:3rem;text-align:center;padding:2rem;color:#666;font-size:.8rem;}
-
-        /* Keeps player hidden but "active" for the browser */
-        #yt-player-container {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-        }
 
         @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
     </style>
@@ -91,12 +84,12 @@
         <div class="music-player">
             <button id="play-pause-btn" onclick="toggleMusic()">▶</button>
             <div style="text-align:left">
-                <p style="font-size:0.7rem; color:#888;">COPY RIGHT FREE MUSIC! AI GENERATED</p>
-                <h4 style="font-size:0.9rem; color:#d4af37;">Luxury Jazz Lofi</h4>
+                <p style="font-size:0.7rem; color:#888;">AI GENERATED RADIO - NO REPETITION</p>
+                <h4 style="font-size:0.9rem; color:#d4af37;">Luxury Jazz Lo-Fi</h4>
             </div>
-            <div id="yt-player-container">
-                <div id="yt-player"></div>
-            </div>
+            <audio id="bg-music" loop>
+                <source src="https://stream.zeno.fm/0r0xa792kwzuv" type="audio/mpeg">
+            </audio>
         </div>
     </div>
 
@@ -121,7 +114,7 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// --- TIMER ---
+// --- TIMER LOGIC ---
 let totalSeconds = 0, initialSeconds = 0, timerInterval = null, selectedMinutes = 0;
 
 function toggleService(btn) {
@@ -173,55 +166,21 @@ function manualReset() {
     updateTimerDisplay(0);
 }
 
-// --- YOUTUBE LIVE RADIO ---
-var player;
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('yt-player', {
-        height: '200', 
-        width: '200',
-        videoId: '5Lp28X-MshE', 
-        playerVars: { 
-            'autoplay': 0, 
-            'controls': 0,
-            'origin': window.location.origin
-        },
-        events: { 
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange 
-        }
-    });
-}
-
-function onPlayerReady(event) {
-    // Player is ready to be used
-    console.log("Player Ready");
-}
-
-function onPlayerStateChange(event) {
-    const btn = document.getElementById('play-pause-btn');
-    // YT.PlayerState.PLAYING is 1
-    if (event.data == 1) {
-        btn.textContent = '⏸';
-    } else {
-        btn.textContent = '▶';
-    }
-}
+// --- AUDIO PLAYER LOGIC ---
+const bgMusic = document.getElementById('bg-music');
+const playBtn = document.getElementById('play-pause-btn');
 
 function toggleMusic() {
-    if (player && player.getPlayerState) {
-        const state = player.getPlayerState();
-        if (state == 1) {
-            player.pauseVideo();
-        } else {
-            player.playVideo();
-        }
+    if (bgMusic.paused) {
+        bgMusic.play().then(() => {
+            playBtn.textContent = '⏸';
+        }).catch(error => {
+            console.error("Playback failed:", error);
+            alert("Please click the button again to enable audio.");
+        });
     } else {
-        console.log("Player not loaded yet");
+        bgMusic.pause();
+        playBtn.textContent = '▶';
     }
 }
 </script>
