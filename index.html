@@ -47,6 +47,16 @@
         .qr-code{width:120px;height:120px;display:block}
         .footer{margin-top:3rem;text-align:center;padding:2rem;color:#666;font-size:.8rem;}
 
+        /* Keeps player hidden but "active" for the browser */
+        #yt-player-container {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
         @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
     </style>
 </head>
@@ -84,7 +94,9 @@
                 <p style="font-size:0.7rem; color:#888;">LIVE RADIO - NO REPETITION</p>
                 <h4 style="font-size:0.9rem; color:#d4af37;">Luxury Jazz Lofi</h4>
             </div>
-            <div id="yt-player" style="position: absolute; top: -9999px; left: -9999px;"></div>
+            <div id="yt-player-container">
+                <div id="yt-player"></div>
+            </div>
         </div>
     </div>
 
@@ -170,22 +182,46 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('yt-player', {
-        height: '1', width: '1',
-        videoId: '5Lp28X-MshE', // Smooth Jazz Lofi Live Stream
-        playerVars: { 'autoplay': 0, 'controls': 0 },
-        events: { 'onStateChange': onPlayerStateChange }
+        height: '200', 
+        width: '200',
+        videoId: '5Lp28X-MshE', 
+        playerVars: { 
+            'autoplay': 0, 
+            'controls': 0,
+            'origin': window.location.origin
+        },
+        events: { 
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange 
+        }
     });
+}
+
+function onPlayerReady(event) {
+    // Player is ready to be used
+    console.log("Player Ready");
 }
 
 function onPlayerStateChange(event) {
     const btn = document.getElementById('play-pause-btn');
-    btn.textContent = (event.data == YT.PlayerState.PLAYING) ? '⏸' : '▶';
+    // YT.PlayerState.PLAYING is 1
+    if (event.data == 1) {
+        btn.textContent = '⏸';
+    } else {
+        btn.textContent = '▶';
+    }
 }
 
 function toggleMusic() {
     if (player && player.getPlayerState) {
-        if (player.getPlayerState() == 1) player.pauseVideo();
-        else player.playVideo();
+        const state = player.getPlayerState();
+        if (state == 1) {
+            player.pauseVideo();
+        } else {
+            player.playVideo();
+        }
+    } else {
+        console.log("Player not loaded yet");
     }
 }
 </script>
