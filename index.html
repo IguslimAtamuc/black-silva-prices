@@ -42,8 +42,11 @@
         #reset-btn { background: transparent; border: 2px solid #ff4d4d; color: #ff4d4d; }
 
         /* --- MUSIC PLAYER --- */
-        .music-player { margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(212, 175, 55, 0.2); justify-content: center; }
-        #play-pause-btn { background: #d4af37; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+        .music-player { margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(212, 175, 55, 0.2); justify-content: center; position: relative; }
+        #play-pause-btn { background: #d4af37; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); z-index: 2; }
+        
+        /* Hidden YouTube Container */
+        #yt-player-container { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
 
         .qr-container{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:3px solid #d4af37;border-radius:30px;padding:2rem;margin-top:2rem;}
         .qr-box{background:#fff;padding:1rem;border-radius:15px;}
@@ -84,12 +87,12 @@
         <div class="music-player">
             <button id="play-pause-btn" onclick="toggleMusic()">▶</button>
             <div style="text-align:left">
-                <p style="font-size:0.7rem; color:#888;">AI GENERATED RADIO - NO REPETITION</p>
-                <h4 style="font-size:0.9rem; color:#d4af37;">Luxury Jazz Lo-Fi</h4>
+                <p style="font-size:0.7rem; color:#888;">AI BIG BAND RADIO - LOOPING</p>
+                <h4 style="font-size:0.9rem; color:#d4af37;">Retro-Futurism Jazz</h4>
             </div>
-            <audio id="bg-music" loop>
-                <source src="https://stream.zeno.fm/0r0xa792kwzuv" type="audio/mpeg">
-            </audio>
+            <div id="yt-player-container">
+                <div id="yt-player"></div>
+            </div>
         </div>
     </div>
 
@@ -166,21 +169,49 @@ function manualReset() {
     updateTimerDisplay(0);
 }
 
-// --- AUDIO PLAYER LOGIC ---
-const bgMusic = document.getElementById('bg-music');
-const playBtn = document.getElementById('play-pause-btn');
+// --- YOUTUBE API LOGIC ---
+var player;
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('yt-player', {
+        height: '200',
+        width: '200',
+        videoId: 'LmUSK1IjoQg', // Your Retro-Futurism Jazz Video
+        playerVars: {
+            'autoplay': 0,
+            'controls': 0,
+            'loop': 1,
+            'playlist': 'LmUSK1IjoQg', // Required for looping
+            'modestbranding': 1,
+            'rel': 0
+        },
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerStateChange(event) {
+    const btn = document.getElementById('play-pause-btn');
+    if (event.data == YT.PlayerState.PLAYING) {
+        btn.textContent = '⏸';
+    } else {
+        btn.textContent = '▶';
+    }
+}
 
 function toggleMusic() {
-    if (bgMusic.paused) {
-        bgMusic.play().then(() => {
-            playBtn.textContent = '⏸';
-        }).catch(error => {
-            console.error("Playback failed:", error);
-            alert("Please click the button again to enable audio.");
-        });
-    } else {
-        bgMusic.pause();
-        playBtn.textContent = '▶';
+    if (player && player.getPlayerState) {
+        const state = player.getPlayerState();
+        if (state == YT.PlayerState.PLAYING) {
+            player.pauseVideo();
+        } else {
+            player.playVideo();
+        }
     }
 }
 </script>
