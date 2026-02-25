@@ -4,91 +4,392 @@
     <meta charset="UTF-8"/>
     <title>Black Silva - Luxury Barbering Experience</title>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;overflow-x:hidden}
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* --- CLOCK --- */
-        .clock-container { margin-top: 2rem; text-align: center; animation: fadeInDown 1s ease; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #050505;
+            color: #f5f5f5;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ─── LAYOUT ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 60px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 50% 100%, rgba(255,255,255,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero > * { position: relative; z-index: 1; }
+
+        /* ─── CLOCK ─── */
+        .clock-container {
+            text-align: center;
+            animation: fadeDown 1s ease both;
+        }
+
         #clock {
-            font-size: 1.5rem; font-weight: 300; color: #d4af37; letter-spacing: 0.3em;
-            border: 1px solid rgba(212, 175, 55, 0.3); padding: 10px 25px;
-            border-radius: 50px; display: inline-block; background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem;
+            font-weight: 300;
+            color: #ffffff;
+            letter-spacing: 0.45em;
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 10px 28px;
+            display: inline-block;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(8px);
         }
 
-        /* --- TIMER --- */
-        .timer-section { margin: 2rem auto; text-align: center; max-width: 600px; width: 90%; z-index: 10; }
-        #active-timer-display { font-size: 4rem; font-weight: 700; color: #d4af37; margin-bottom: 10px; font-variant-numeric: tabular-nums; }
-        .progress-container { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
-        #progress-bar { width: 0%; height: 100%; background: #d4af37; transition: width 1s linear, background-color 0.5s ease; }
+        .clock-label {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.35em;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
 
-        .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);padding-bottom: 50px;}
-        .logo{font-size:clamp(2.5rem,6vw,5rem);font-weight:300;letter-spacing:.2em;text-transform:uppercase;margin-top:2rem;text-align:center;}
-        .logo span{color:#d4af37;font-weight:600}
+        /* ─── LOGO ─── */
+        .logo {
+            margin-top: 3rem;
+            text-align: center;
+            animation: fadeDown 1s 0.15s ease both;
+        }
 
-        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 90%; max-width: 800px; margin-top: 20px; }
+        .logo-main {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            font-weight: 300;
+            letter-spacing: 0.6em;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            margin-top: 0.6rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: rgba(255,255,255,0.25);
+            margin: 1.8rem auto;
+        }
+
+        /* ─── TIMER SECTION ─── */
+        .timer-section {
+            width: 90%;
+            max-width: 560px;
+            text-align: center;
+            animation: fadeUp 1s 0.3s ease both;
+        }
+
+        #active-timer-display {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4rem, 12vw, 7rem);
+            font-weight: 300;
+            color: #ffffff;
+            letter-spacing: 0.08em;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+        }
+
+        .timer-label {
+            font-size: 0.6rem;
+            font-weight: 400;
+            letter-spacing: 0.4em;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            margin-top: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* ─── PROGRESS BAR ─── */
+        .progress-container {
+            width: 100%;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            overflow: hidden;
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #ffffff;
+            transition: width 1s linear;
+        }
+
+        /* ─── SERVICE BUTTONS ─── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
         .service-btn {
-            background: #111; border: 1px solid rgba(212, 175, 55, 0.5); color: #fff;
-            padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s;
-            display: flex; flex-direction: column; align-items: center;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.6);
+            padding: 18px 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
         }
-        .service-btn.selected { background: #d4af37; color: #000; border-color: #fff; }
-        .service-btn span { font-size: 0.8rem; opacity: 0.8; }
 
-        .control-btns { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
-        #start-btn, #reset-btn { padding: 12px 30px; font-weight: bold; cursor: pointer; border-radius: 50px; text-transform: uppercase; transition: 0.3s; font-size: 0.9rem; }
-        #start-btn { background: #d4af37; border: 2px solid #d4af37; color: #000; }
-        #reset-btn { background: transparent; border: 2px solid #ff4d4d; color: #ff4d4d; }
+        .service-btn span {
+            font-size: 0.6rem;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.3);
+            transition: color 0.25s;
+        }
 
-        /* --- MUSIC PLAYER --- */
-        .music-player { margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(212, 175, 55, 0.2); justify-content: center; position: relative; }
-        #play-pause-btn { background: #d4af37; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); z-index: 2; }
-        
+        .service-btn:hover {
+            border-color: rgba(255,255,255,0.4);
+            color: #ffffff;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .service-btn:hover span { color: rgba(255,255,255,0.6); }
+
+        .service-btn.selected {
+            background: #ffffff;
+            border-color: #ffffff;
+            color: #050505;
+        }
+
+        .service-btn.selected span { color: rgba(0,0,0,0.55); }
+
+        /* ─── CONTROL BUTTONS ─── */
+        .control-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        #start-btn, #reset-btn {
+            padding: 11px 28px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border-radius: 0;
+        }
+
+        #start-btn {
+            background: #ffffff;
+            border: 1px solid #ffffff;
+            color: #050505;
+        }
+
+        #start-btn:hover:not(:disabled) {
+            background: transparent;
+            color: #ffffff;
+        }
+
+        #start-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        #reset-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.45);
+        }
+
+        #reset-btn:hover {
+            border-color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* ─── MUSIC PLAYER ─── */
+        .music-player {
+            margin-top: 28px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: center;
+            position: relative;
+        }
+
+        #play-pause-btn {
+            background: #ffffff;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #050505;
+            flex-shrink: 0;
+            transition: opacity 0.2s;
+        }
+
+        #play-pause-btn:hover { opacity: 0.85; }
+
+        .music-info { text-align: left; }
+
+        .music-label {
+            font-size: 0.55rem;
+            letter-spacing: 0.25em;
+            color: rgba(255,255,255,0.25);
+            text-transform: uppercase;
+        }
+
+        .music-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.75);
+            font-style: italic;
+            margin-top: 2px;
+        }
+
         /* Hidden YouTube Container */
-        #yt-player-container { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+        #yt-player-container {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
 
-        .qr-container{background:linear-gradient(145deg,#1a1a1a,#0f0f0f);border:3px solid #d4af37;border-radius:30px;padding:2rem;margin-top:2rem;}
-        .qr-box{background:#fff;padding:1rem;border-radius:15px;}
-        .qr-code{width:120px;height:120px;display:block}
-        .footer{margin-top:3rem;text-align:center;padding:2rem;color:#666;font-size:.8rem;}
+        /* ─── QR CODE ─── */
+        .qr-container {
+            margin-top: 3rem;
+            text-align: center;
+            animation: fadeUp 1s 0.45s ease both;
+        }
 
-        @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+        .qr-box {
+            display: inline-block;
+            padding: 12px;
+            background: #fff;
+        }
+
+        .qr-code { width: 110px; height: 110px; display: block; }
+
+        .qr-label {
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.45em;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            margin-top: 14px;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.6rem;
+            font-weight: 300;
+            letter-spacing: 0.35em;
+            color: rgba(255,255,255,0.2);
+            text-transform: uppercase;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
 <div class="hero">
+
     <div class="clock-container">
         <div id="clock">00:00:00</div>
-        <p style="font-size: 0.7rem; color: #888; margin-top: 5px; letter-spacing: 2px;">COPENHAGEN TIME</p>
+        <p class="clock-label">Copenhagen Time</p>
     </div>
 
-    <h1 class="logo"><span>BLACK</span> SILVA</h1>
+    <div class="logo">
+        <div class="logo-main">Black Silva</div>
+        <div class="logo-sub">Luxury Barbering · Copenhagen</div>
+    </div>
+
+    <div class="divider"></div>
 
     <div class="timer-section">
         <div id="active-timer-display">00:00</div>
+        <p class="timer-label">Service Duration</p>
+
         <div class="progress-container">
             <div id="progress-bar"></div>
         </div>
-        
+
         <div class="services-grid">
-            <button class="service-btn" data-time="50" onclick="toggleService(this)">FADE <span>50 MIN</span></button>
-            <button class="service-btn" data-time="30" onclick="toggleService(this)">UNDERCUT <span>30 MIN</span></button>
-            <button class="service-btn" data-time="20" onclick="toggleService(this)">BEARD <span>20 MIN</span></button>
-            <button class="service-btn" data-time="5" onclick="toggleService(this)">HAIR WASH <span>5 MIN</span></button>
+            <button class="service-btn" data-time="50" onclick="toggleService(this)">Fade <span>50 min</span></button>
+            <button class="service-btn" data-time="30" onclick="toggleService(this)">Undercut <span>30 min</span></button>
+            <button class="service-btn" data-time="20" onclick="toggleService(this)">Beard <span>20 min</span></button>
+            <button class="service-btn" data-time="5" onclick="toggleService(this)">Hair Wash <span>5 min</span></button>
         </div>
-        
+
         <div class="control-btns">
             <button id="start-btn" onclick="startTimer()">Start Service</button>
-            <button id="reset-btn" onclick="manualReset()">Reset Timer</button>
+            <button id="reset-btn" onclick="manualReset()">Reset</button>
         </div>
 
         <div class="music-player">
             <button id="play-pause-btn" onclick="toggleMusic()">▶</button>
-            <div style="text-align:left">
-                <p style="font-size:0.7rem; color:#888;">COPY RIGHT FREE MUSIC! AI GENERATED</p>
-                <h4 style="font-size:0.9rem; color:#d4af37;">Retro-Futurism Jazz</h4>
+            <div class="music-info">
+                <p class="music-label">Copyright Free · AI Generated</p>
+                <p class="music-title">Retro-Futurism Jazz</p>
             </div>
             <div id="yt-player-container">
                 <div id="yt-player"></div>
@@ -102,10 +403,11 @@
         <div class="qr-box">
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://www.fresha.com/a/black-silva-hairdresser-kobenhavn-copenhagen-badstuestraede-16-l3h4w19k" alt="Scan to Book" class="qr-code"/>
         </div>
-        <p style="text-align:center; margin-top:10px; color:#d4af37; font-weight:bold;">SCAN TO BOOK</p>
+        <p class="qr-label">Scan to Book</p>
     </div>
 
-    <div class="footer"><p>BADSTUESTRÆDE 16 · 1209 KØBENHAVN K</p></div>
+    <div class="footer"><p>Badstuestræde 16 &middot; 1209 København K</p></div>
+
 </div>
 
 <script>
@@ -121,7 +423,7 @@ updateClock();
 let totalSeconds = 0, initialSeconds = 0, timerInterval = null, selectedMinutes = 0;
 
 function toggleService(btn) {
-    if (timerInterval) return; 
+    if (timerInterval) return;
     const minutes = parseInt(btn.getAttribute('data-time'));
     if (btn.classList.contains('selected')) {
         btn.classList.remove('selected');
@@ -180,12 +482,12 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('yt-player', {
         height: '200',
         width: '200',
-        videoId: 'LmUSK1IjoQg', // Your Retro-Futurism Jazz Video
+        videoId: 'LmUSK1IjoQg',
         playerVars: {
             'autoplay': 0,
             'controls': 0,
             'loop': 1,
-            'playlist': 'LmUSK1IjoQg', // Required for looping
+            'playlist': 'LmUSK1IjoQg',
             'modestbranding': 1,
             'rel': 0
         },
